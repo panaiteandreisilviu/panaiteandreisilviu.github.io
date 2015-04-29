@@ -3,23 +3,25 @@ body{
 }
 
 #wrapper{
-    height:600px;
-    position:absolute;
-    width:600px;
-    margin:5px;
+    height:500px;
+    position:relative;
+    width:500px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:50px;
     padding:10px;
-    background-image:url("bcg.png");
+    background-size:cover;
 }
 
 .tiles{
     position:absolute;
     display:none;
     float:left;
-    height:180px;
-    width:180px;
+    height:151px;
+    width:151px;
     margin:10px;
     margin-top:10px;
-    line-height:180px;
+    line-height:151px;
     font-size:100px;
     text-align:center;
     transition:all 0.2s;
@@ -28,10 +30,18 @@ body{
 }
 
 
+#backgroundTile{
+
+    display:none;
+    float:left;
+    z-index:100;
+}
+
+
 #test1{
 
-    position:absolute;
-    left:640px;
+    position:relative;
+    float:right;
     top:15px;
     font-size:20px;
     background-color:gray;

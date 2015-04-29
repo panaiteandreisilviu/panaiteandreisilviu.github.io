@@ -290,6 +290,7 @@ var tiles = new Array(45);
 				else{
 					
 					score+=multiplierRush;
+					document.getElementById("timer").style.backgroundColor = "rgba(100,0,255,0.15)";
 						
 				}
 				if(gameMode === "rush")

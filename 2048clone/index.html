@@ -10,6 +10,7 @@
 
     <div id="wrapper">
         <div id="tile" class="tiles"></div>
+        <div id="backgroundTile" class="bcgTile"></div>
     </div>
 
     <div id="test1">
@@ -19,20 +20,20 @@
     <script>
 
         var tile = document.getElementById("tile");
-        var tileMatrix = new Array(4);
-        for (var i = 0; i < 4; i++) {
-            tileMatrix[i] = new Array(4);
+        var tileMatrix = new Array(10);
+        for (var i = 0; i < 10; i++) {
+            tileMatrix[i] = new Array(10);
         }
 
 
         //matrice in care pastrez tile-urile
-        for (var i = 0 ; i < 4 ; i++)
+        for (var i = 0 ; i < 10 ; i++)
         {
-            for(var j = 0; j<4; j++)
+            for(var j = 0; j < 10; j++)
             {
                 if (i == 0 || j == 0)
                 {
-                    tileMatrix[i][j] = "notUsable"; //folosesc doar coloanele si liniile 1,2,3
+                    tileMatrix[i][j] = "notUsable"; //nu folosesc linia si coloana 0;
                 }
 
                 else
@@ -42,8 +43,10 @@
             }
         }
 
+        var gridSize = 4;
+        //prompt("GRID SIZE (>=3)");
 
-        //Constructorul obiectului tile
+        //Constructorul obiectului tileObject
         function tileObject(ypos, xpos) {
 
             this.nodeSaved = document.getElementById("tile").cloneNode(true);
@@ -55,47 +58,142 @@
             
             this.autoPosition = function ()
             {
-
-                switch (this.x)
+                
+                switch (gridSize)
                 {
-                    case 1:
-                        this.nodeSaved.style.left = "10px";
-                        break;
-
-                    case 2:
-                        this.nodeSaved.style.left = "210px";
-                        break;
-
                     case 3:
-                        this.nodeSaved.style.left = "410px";
+
+                        switch (this.x)
+                        {
+                            case 1:
+                                this.nodeSaved.style.left = "7px";
+                                break;
+
+                            case 2:
+                                this.nodeSaved.style.left = "175px";
+                                break;
+
+                            case 3:
+                                this.nodeSaved.style.left = "343px";
+                                break;
+                        }
+
+
+                        switch (this.y)
+                        {
+                            case 1:
+                                this.nodeSaved.style.top = "6px";
+                                break;
+
+                            case 2:
+                                this.nodeSaved.style.top = "174px";
+                                break;
+
+                            case 3:
+                                this.nodeSaved.style.top = "343px";
+                                break;
+                        }
+
                         break;
+
+
+
+                    case 4:
+
+                        switch (this.x) {
+                            case 1:
+                                this.nodeSaved.style.left = "7px";
+                                break;
+
+                            case 2:
+                                this.nodeSaved.style.left = "132px";
+                                break;
+
+                            case 3:
+                                this.nodeSaved.style.left = "257px";
+                                break;
+
+                            case 4:
+                                this.nodeSaved.style.left = "382px";
+                                break;
+                        }
+
+
+                        switch (this.y) {
+                            case 1:
+                                this.nodeSaved.style.top = "7px";
+                                break;
+
+                            case 2:
+                                this.nodeSaved.style.top = "132px";
+                                break;
+
+                            case 3:
+                                this.nodeSaved.style.top = "257px";
+                                break;
+
+                            case 4:
+                                this.nodeSaved.style.top = "382px";
+                                break;
+                        }
+
+                        break;
+                        break;
+
                 }
-
-
-                switch (this.y) {
-                    case 1:
-                        this.nodeSaved.style.top = "10px";
-                        break;
-
-                    case 2:
-                        this.nodeSaved.style.top = "210px";
-                        break;
-
-                    case 3:
-                        this.nodeSaved.style.top = "410px";
-                        break;
-                }
-
 
 
             }
 
+ }
+                
 
+        function startGame(){
+
+            var tileVar = document.getElementById("tile");
+            var wrapperVar = document.getElementById("wrapper");
+            var backgroundTile = document.getElementById("backgroundTile");
+
+            switch (gridSize)
+            {
+                case 3:
+                    tileVar.style.height = "152px";
+                    tileVar.style.width = "152px";
+                    wrapperVar.style.backgroundImage = "url('bcg.png')"
+                    break;
+
+                case 4:
+
+                    tileVar.style.height = "111px";
+                    tileVar.style.width = "111px";
+                    tileVar.style.lineHeight = "111px";
+                    tileVar.style.fontSize = "80px";
+
+                    wrapperVar.style.backgroundColor = "gray";
+
+                    backgroundTile.style.height = "111px";
+                    backgroundTile.style.width = "111px";
+                    backgroundTile.style.margin = "7px";
+                    backgroundTile.style.display = "block";
+                    backgroundTile.style.backgroundColor = "#cbcbcb";
+                    //backgroundTile.style.position = "absolute";
+
+                    for (i = 1 ; i < gridSize * gridSize ; i++) {
+
+                        wrapperVar.appendChild(backgroundTile.cloneNode(true));
+
+
+                    }
+                    
+                    
+
+                    break;
+            }
         }
 
-
+        startGame();
         
-
+        
 
         tileMatrix[1][1] = new tileObject(1, 1);
         tileMatrix[1][1].nodeSaved.innerHTML = "2";
@@ -103,7 +201,6 @@
 
         document.getElementById("wrapper").appendChild(tileMatrix[1][1].nodeSaved);
         tileMatrix[1][1].autoPosition();
-
 
 
 
@@ -123,14 +220,14 @@
         tileMatrix[2][2].autoPosition();
 
 
-
+        
 
         function updateConsole() {
 
             document.getElementById("test1").innerHTML = "";
 
-            for (a = 1 ; a <= 3 ; a++) {
-                for (b = 1 ; b <= 3 ; b++) {
+            for (a = 1 ; a <= gridSize ; a++) {
+                for (b = 1 ; b <= gridSize ; b++) {
                     if (tileMatrix[a][b]) {
                         document.getElementById("test1").innerHTML += " 1"
 
@@ -157,243 +254,172 @@
             {
                 case 37:
 
+                    key.preventDefault(); //opreste 'comportamentul' default al sagetilor (previne scrollul pagini folosind sagetile)
+
                     //left
                     
-                    for (j = 2 ; j <= 3 ; j++) //coloana
+                    for (j = 2 ; j <= gridSize ; j++) //coloana
                     {
-                        for(i = 1 ; i <= 3 ; i++) // linie
+                        for (i = 1 ; i <= gridSize ; i++) // linie
                         {
-                            if(tileMatrix[i][j] != 0)
-                            {
-                                if (j == 2)
+                            if (tileMatrix[i][j] != 0) {
+
+
+                                for (k = j ; k >= 2 ; k--)
+
                                 {
-                                    if (tileMatrix[i][1] == 0) //daca in stanga nu exista tile
+                                    if (tileMatrix[i][k - 1] == 0) //daca in stanga nu exista tile
                                     {
-                                        tileMatrix[i][j].x = 1
-                                        tileMatrix[i][j].autoPosition();
-                                        tileMatrix[i][1] = tileMatrix[i][j];
-                                        tileMatrix[i][j] = 0;
-                                    }
-                                }
-
-                                else if(j == 3)
-                                {
-                                    {
-                                   
-                                        if (tileMatrix[i][2] == 0) //daca in stanga (pe col2) nu exista tile
-                                        {
-                                            tileMatrix[i][j].x = 2;
-                                            tileMatrix[i][j].autoPosition();
-
-                                            tileMatrix[i][2] = tileMatrix[i][j];
-                                            tileMatrix[i][j] = 0;
-
-                                            if (tileMatrix[i][1] == 0) //daca in stanga (pe col1) nu exista tile
-                                            {
-                                                tileMatrix[i][2].x = 1;
-                                                tileMatrix[i][2].autoPosition();
-
-                                                tileMatrix[i][1] = tileMatrix[i][2];
-                                                tileMatrix[i][2] = 0;
-                                            }
-                                        }
-
-                                        
-
-
-
+                                        tileMatrix[i][k].x = k - 1;
+                                        tileMatrix[i][k].autoPosition();
+                                        tileMatrix[i][k - 1] = tileMatrix[i][k];
+                                        tileMatrix[i][k] = 0;
                                     }
 
+                                    else {
+
+                                        break;
+                                    }
+
+
                                 }
-                                        
+
+
+
                             }
-
                         }
+
                     }
                
+                    updateConsole();
+                    break;
+
+               
+                
+                case 39:
+
+                    //right
+                    key.preventDefault(); //opreste 'comportamentul' default al sagetilor (previne scrollul pagini folosind sagetile)
+               
+
+                    for (j = gridSize-1 ; j >= 1 ; j--) //coloana
+                    {
+                        for (i = 1 ; i <= gridSize ; i++) // linie
+                        {
+                            if (tileMatrix[i][j] != 0) {
+
+
+                                for (k = j ; k <=gridSize-1 ; k++) {//verifica toate pozitiile din dreapta
+                                    if (tileMatrix[i][k + 1] == 0) //daca in dreapta nu exista tile
+                                    {
+                                        tileMatrix[i][k].x = k + 1;
+                                        tileMatrix[i][k].autoPosition();
+                                        tileMatrix[i][k + 1] = tileMatrix[i][k];
+                                        tileMatrix[i][k] = 0;
+                                    }
+
+                                    else {
+
+                                        break;
+                                    }
+                                }
+
+                            }
+                        }
+
+                    }
+                    updateConsole();
+                    break;
+
+
+                case 40:
+                    //down
+                    key.preventDefault(); //opreste 'comportamentul' default al sagetilor (previne scrollul pagini folosind sagetile)
+
+
+                    // i = LIN
+                    // j = COL
+
+
+                    for (i = gridSize - 1 ; i >= 1 ; i--) //coloana
+                    {
+                        for (j = 1 ; j <= gridSize ; j++) // linie
+                        {
+                            if (tileMatrix[i][j] != 0) {
+
+
+                                for (k = i ; k <= gridSize - 1 ; k++) {//verifica toate pozitiile de mai jos
+                                    if (tileMatrix[k + 1][j] == 0) //daca jos nu exista tile
+                                    {
+                                        tileMatrix[k][j].y = k + 1;
+                                        tileMatrix[k][j].autoPosition();
+                                        tileMatrix[k + 1][j] = tileMatrix[k][j];
+                                        tileMatrix[k][j] = 0;
+                                    }
+
+                                    else {
+
+                                        break;
+                                    }
+                                }
+
+                            }
+                        }
+
+                    }
                     updateConsole();
                     break;
 
                 case 38:
 
                     //up
+                    key.preventDefault(); //opreste 'comportamentul' default al sagetilor (previne scrollul pagini folosind sagetile)
                     // i = LIN
                     // j = COL
 
-                    for (i = 2 ; i <=3 ; i++) //linie
+
+                    for (i = 2 ; i <= gridSize ; i++) //coloana
                     {
-                        for (j = 1 ; j <= 3 ; j++) // coloana
+                        for (j = 1 ; j <= gridSize ; j++) // linie
                         {
                             if (tileMatrix[i][j] != 0) {
-                                if (i == 2) {
-                                    if (tileMatrix[1][j] == 0) //daca sus nu exista tile
+
+
+                                for (k = i ; k >= 2 ; k--) {//verifica toate pozitiile de mai jos
+                                    if (tileMatrix[k - 1][j] == 0) //daca jos nu exista tile
                                     {
-                                        tileMatrix[i][j].y = 1
-                                        tileMatrix[i][j].autoPosition();
-                                        tileMatrix[1][j] = tileMatrix[i][j];
-                                        tileMatrix[i][j] = 0;
-                                    }
-                                }
-
-                                else if (i == 3) {
-                                    {
-
-                                        if (tileMatrix[2][j] == 0) //daca sus (pe lin2) nu exista tile
-                                        {
-                                            tileMatrix[i][j].y = 2;
-                                            tileMatrix[i][j].autoPosition();
-
-                                            tileMatrix[2][j] = tileMatrix[i][j];
-                                            tileMatrix[i][j] = 0;
-
-                                            if (tileMatrix[1][j] == 0) //daca sus (pe lin1) nu exista tile
-                                            {
-                                                tileMatrix[2][j].y = 1;
-                                                tileMatrix[2][j].autoPosition();
-
-                                                tileMatrix[1][j] = tileMatrix[2][j];
-                                                tileMatrix[2][j] = 0;
-                                            }
-                                        }
-
-
-
-
-
+                                        tileMatrix[k][j].y = k - 1;
+                                        tileMatrix[k][j].autoPosition();
+                                        tileMatrix[k - 1][j] = tileMatrix[k][j];
+                                        tileMatrix[k][j] = 0;
                                     }
 
+                                    else {
+
+                                        break;
+                                    }
                                 }
 
                             }
-
                         }
-                    }
-                    updateConsole();
 
-                    break;
-                
-                case 39:
-
-                    //right
-                    for (j = 2 ; j >= 1 ; j--) //coloana
-                    {
-                        for (i = 1 ; i <= 3 ; i++) // linie
-                        {
-                            if (tileMatrix[i][j] != 0) {
-                                if (j == 2) {
-                                    if (tileMatrix[i][3] == 0) //daca in dreapta nu exista tile
-                                    {
-                                        tileMatrix[i][j].x = 3;
-                                        tileMatrix[i][j].autoPosition();
-                                        tileMatrix[i][3] = tileMatrix[i][j];
-                                        tileMatrix[i][j] = 0;
-                                    }
-                                }
-
-                                else if (j == 1) {
-                                    {
-
-                                        if (tileMatrix[i][2] == 0) //daca in dreapta (pe col2) nu exista tile
-                                        {
-                                            tileMatrix[i][j].x = 2;
-                                            tileMatrix[i][j].autoPosition();
-
-                                            tileMatrix[i][2] = tileMatrix[i][j];
-                                            tileMatrix[i][j] = 0;
-
-                                            if (tileMatrix[i][3] == 0) //daca in dreapta (pe col3) nu exista tile
-                                            {
-                                                tileMatrix[i][2].x = 3;
-                                                tileMatrix[i][2].autoPosition();
-
-                                                tileMatrix[i][3] = tileMatrix[i][2];
-                                                tileMatrix[i][2] = 0;
-                                            }
-                                        }
-
-
-
-
-
-                                    }
-
-                                }
-
-                            }
-
-                        }
                     }
                     updateConsole();
                     break;
-
-                case 40:
-                    //down
-
-
-                    // i = LIN
-                    // j = COL
-
-                    for (i = 2 ; i >= 1 ; i--) //linie
-                    {
-                        for (j = 1 ; j <= 3 ; j++) // coloana
-                        {
-                            if (tileMatrix[i][j] != 0) {
-                                if (i == 2) {
-                                    if (tileMatrix[3][j] == 0) //daca jos nu exista tile
-                                    {
-                                        tileMatrix[i][j].y = 3
-                                        tileMatrix[i][j].autoPosition();
-                                        tileMatrix[3][j] = tileMatrix[i][j];
-                                        tileMatrix[i][j] = 0;
-                                    }
-                                }
-
-                                else if (i == 1) {
-                                    {
-
-                                        if (tileMatrix[2][j] == 0) //daca jos (pe lin2) nu exista tile
-                                        {
-                                            tileMatrix[i][j].y = 2;
-                                            tileMatrix[i][j].autoPosition();
-
-                                            tileMatrix[2][j] = tileMatrix[i][j];
-                                            tileMatrix[i][j] = 0;
-
-                                            if (tileMatrix[3][j] == 0) //daca jos (pe lin3) nu exista tile
-                                            {
-                                                tileMatrix[2][j].y = 3;
-                                                tileMatrix[2][j].autoPosition();
-
-                                                tileMatrix[3][j] = tileMatrix[2][j];
-                                                tileMatrix[2][j] = 0;
-                                            }
-                                        }
-
-
-
-
-
-                                    }
-
-                                }
-
-                            }
-
-                        }
-                    }
-                    updateConsole();
-                    break;
-
-
             }
+
+
+
 
             function moveTiles(direction) {
                 
+                //vrajeala
+                //test input
 
                 switch(direction)
                 {
                     case "up":
-                        oneone.position;
+                        alert("up");
                         break;
 
                     case "down":
