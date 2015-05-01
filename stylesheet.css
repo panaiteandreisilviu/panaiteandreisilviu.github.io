@@ -1,7 +1,7 @@
 body{
 	
 	background-color:rgb(186, 186, 186);
-    background-image:url(Silver.jpg);
+    background-image:url("/Silver.jpg");
     background-repeat: no-repeat
     margin:0;
 	
