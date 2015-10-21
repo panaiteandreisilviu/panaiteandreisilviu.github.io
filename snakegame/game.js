@@ -293,19 +293,55 @@ var tiles = new Array(45);
 					document.getElementById("timer").style.backgroundColor = "rgba(100,0,255,0.15)";
 						
 				}
+                
+                
 				if(gameMode === "rush")
 				{	
+				
+                    rushPowerupCounter++;
 					
-					foodCounterRush++;
+                    
+                    if(rushPowerupCounter <= 9)
+                    {
+                        var progres = document.getElementById("progressSquare").cloneNode(true);
+                        progres.style.display = "block";
+                        
+                          
+                        if(rushPowerupCounter <= 3)
+                        {
+                            progres.style.backgroundColor = "rgb(169, 215, 255)";
+                        }
+                        
+                        else if(rushPowerupCounter <= 6 )
+                        {
+                            progres.style.backgroundColor = "rgb(116, 158, 255)";
+                        }
+                        
+                        else if(rushPowerupCounter <= 9 )
+                        {
+                            progres.style.backgroundColor = "rgb(39, 106, 255)";
+                        }
+                        
+                        document.getElementById("rushLevelCounterBottom").appendChild(progres);
 					
-					var progres = document.getElementById("progressSquare").cloneNode(true);
-					progres.style.display = "block";
+                    }
+                    
+                    else
+                    {
+                        rushPowerupCounter = 0;
+                        var levelBottomCounter = document.getElementById("rushLevelCounterBottom");
+                        while(levelBottomCounter.firstChild)
+                        {
+                            levelBottomCounter.removeChild(levelBottomCounter.firstChild);
+                        }
+                    }
 					
-					document.getElementById("rushLevelCounterBottom").appendChild(progres);
-					
-					if(foodCounterRush == 3)
+                    
+                    foodCounterRush++;
+                    
+					if(foodCounterRush == 1)
 					{
-						if (multiplierRush <3)
+						if (multiplierRush <100)
 						{	
 							multiplierRush++;
 						}
@@ -695,6 +731,7 @@ var tiles = new Array(45);
 			canShowPauseMenu = 1;
 			drawMap(map);
 			requiredScore  = -1;
+            document.getElementById("rushDisplay").style.visibility = "hidden";
 			stopgame = window.setInterval(function(){game_manager();}, snake.speed);
 			
 		}
@@ -704,6 +741,7 @@ var tiles = new Array(45);
 			
 			canShowPauseMenu = 1;
 			gameMode = "campaign";
+            document.getElementById("rushDisplay").style.visibility = "hidden";
 			
 			switch(diff)
 			{
@@ -748,6 +786,7 @@ var tiles = new Array(45);
 		var gameMode;
 		var multiplierRush = 1;
 		var foodCounterRush = 0;
+        var rushPowerupCounter = 0;
 		
 		function startRush(){
 			
@@ -755,6 +794,8 @@ var tiles = new Array(45);
 			stopgame = 0;
 			canShowPauseMenu = 1;
 			document.getElementById("timer").style.display = "block";
+            document.getElementById("timer").style.visibility = "visible";
+            document.getElementById("rushDisplay").style.visibility = "visible";
 			snake.speed = 40;
 			stopgame = window.setInterval(function(){game_manager();}, snake.speed);	
 			timerStopVar = window.setInterval(function(){timer();} , 100);
@@ -792,6 +833,14 @@ var tiles = new Array(45);
 				document.getElementById("timer").style.backgroundColor = "rgba(255,0,0,0.1)"
 				multiplierRush = 1;
 				foodCounterRush = 0;
+                rushPowerupCounter = 0;
+                
+                
+                var levelBottomCounter = document.getElementById("rushLevelCounterBottom");
+                while(levelBottomCounter.firstChild)
+                {
+                    levelBottomCounter.removeChild(levelBottomCounter.firstChild);
+                }
 				
 					
 			}
