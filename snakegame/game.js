@@ -785,6 +785,7 @@ function startQuickPlay()
     drawMap(map);
     requiredScore  = -1;
     document.getElementById("rushDisplay").style.visibility = "hidden";
+    document.getElementById("rushTopDisplay").style.visibility = "hidden";
     stopgame = window.setInterval(function(){game_manager();}, snake.speed);
 
 }
@@ -795,6 +796,7 @@ function startCampaign(diff)
     canShowPauseMenu = 1;
     gameMode = "campaign";
     document.getElementById("rushDisplay").style.visibility = "hidden";
+    document.getElementById("rushTopDisplay").style.visibility = "hidden";
 
     switch(diff)
     {
@@ -846,6 +848,7 @@ function startRush(){
     document.getElementById("timer").style.display = "block";
     document.getElementById("timer").style.visibility = "visible";
     document.getElementById("rushDisplay").style.visibility = "visible";
+    document.getElementById("rushTopDisplay").style.visibility = "visible";
     snake.speed = 40;
     
     stopgame = window.setInterval(function(){game_manager();}, snake.speed);
